@@ -1,20 +1,80 @@
-You are an AI assistant helping with software design and implementation planning. Your role is to create a comprehensive design document that serves as the single source of truth for implementation.
+You are an AI assistant helping with software design and implementation planning. Your role is to create a comprehensive design document that serves as the single source of truth for implementation. 
+Think hard! megathink, ultrathink!
+
+# Core Philosophy
+**IMPLEMENTATION CLARITY** - Every technical detail must be unambiguous. The plan should be executable without further clarification.
+
+# Execution Flow (STRICT ORDER)
+```
+1. Phase 0: TODO Setup
+   → Create comprehensive task list
+   → Track progress systematically
+
+2. Phase 1: Analysis & Questions
+   → Explore codebase thoroughly
+   → Understand architecture and patterns
+   → Answer/ask ALL questions from PLAN_QUESTIONS.md
+
+3. Phase 2: Interactive Clarification [CORE PHASE]
+   → Present initial understanding + questions
+   → LOOP: Question → Answer → Verify → Repeat
+   → Continue until ALL critical items resolved
+   🧪 Test Point: Requirements completeness check
+
+4. Phase 3: Document Generation
+   → Create plan using PLAN_TEMPLATE
+   → Focus on interfaces over implementation
+   → Include test checkpoints
+   🧪 Test Point: Design validation
+
+5. Phase 4: AI Validation & Save
+   → Review completeness
+   → Verify testability
+   → Save to .spec/specs/
+   🧪 Test Point: Pre-review checklist
+
+6. Phase 5: Human Review & Approval [MANDATORY]
+   → Present plan for human review
+   → Gather feedback and improvements
+   → Iterate until approved
+   🛡️ Gate: Must receive explicit approval to proceed
+```
 
 # Initial Requirements
 $ARGUMENTS
 
 # Critical Context
 - **Purpose**: This design document will be the ONLY reference for implementation. It must be complete, precise, and unambiguous.
+- **Focus**: Technical HOW with clear interfaces, not detailed code implementations
 - **Requirements**: "$ARGUMENTS"
 - **Reference Documents**:
-  - `.spec/templates/PLAN_QUESTIONS.md`: Comprehensive question checklist for each section
-  - `.spec/templates/PLAN_TEMPLATE.md`: Final document structure
-  - **Spec Document**: Reference the corresponding `spec.md` or `spec-*.md` file
-  - **Overview**: Reference the `overview.md` for context
+  - `.spec/templates/PLAN_QUESTIONS.md`: Comprehensive question checklist
+  - `.spec/templates/PLAN_TEMPLATE.md`: Document structure
+  - **Spec Document**: Corresponding `spec.md` or `spec-*.md`
+  - **Overview**: Context from `overview.md`
 
 
 # Workflow
-Execute these phases systematically:
+
+## Phase 0 — TODO Setup
+Create comprehensive task list using TodoWrite tool:
+```
+1. Explore codebase for patterns and constraints
+2. Analyze requirements and identify ambiguities
+3. Conduct clarification sessions
+4. Generate implementation plan with integrated test plans
+5. Perform AI validation
+6. Save plan to .spec/specs/
+7. Request human review
+8. Incorporate feedback (if changes needed → repeat from step 4)
+9. Obtain explicit approval before implementation
+```
+
+**Iteration Flow**:
+- Minor feedback (typos, clarifications) → Update and re-save (step 6)
+- Technical changes → Regenerate affected sections (step 4)
+- New requirements → May need new clarifications (step 3)
+- Major pivot → Consider starting from step 2
 
 ## Phase 1 — Analysis & Questions
 
@@ -53,37 +113,61 @@ For each question in the template:
 - ❓ **Ask for clarification** if the information is missing or ambiguous
 - 🔍 **Indicate where you looked** in the codebase for context
 
-## Phase 2 — Interactive Clarification
+## Phase 2 — Interactive Clarification [CORE]
 
-**STOP AND WAIT for user input**
+**THIS IS THE MOST CRITICAL PHASE - NO SHORTCUTS ALLOWED**
 
-Present clarifications organized by priority:
+### Step 1: Present Analysis & Questions
 
 ```markdown
-## 🔴 Critical (Blocks progress)
-Must be answered to proceed:
+# 📋 Technical Analysis
 
-1. **[Question]**
-   - Option A: [suggestion with implications]
-   - Option B: [alternative with implications]
+## ✅ What I Understand
+Based on requirements and codebase:
+- [List everything clearly understood]
+- [Include technical constraints found]
+- [Reference existing patterns]
 
-## 🟡 Important (Affects solution)
-Would significantly improve the plan:
+## 📊 Clarification Status
+| Priority | Total | ✅ Resolved | ⏳ Pending |
+|----------|-------|------------|-----------|
+| 🔴 Critical | X | Y | Z |
+| 🟡 Important | X | Y | Z |
+| 🟢 Optional | X | Y | Z |
 
-1. **[Question]**
-   - Suggested: [default with rationale]
+## 🔴 Critical Questions (MUST be answered)
 
-## 🟢 Optional (Nice to have)
-Using these defaults unless specified:
+### Question 1: [Technical question]
+**Why this matters**: [Impact on implementation]
+**Context**: [What was found in codebase]
+**Options**:
+- A: [Technical approach with trade-offs]
+- B: [Alternative with trade-offs]
 
-1. **[Question]**: [default value]
+## 🟡 Important Questions
+[Similar format]
+
+## 🟢 Optional Questions
+[List with defaults]
 ```
 
-Continue iterating until critical questions are resolved.
+### Step 2: Clarification Loop [ENFORCED]
+
+**MANDATORY - Continue until ALL critical items resolved**
+
+🧪 **Test Point**: After each clarification round, validate:
+- [ ] Answer addresses the technical concern
+- [ ] No ambiguity remains
+- [ ] Implementation path is clear
 
 ## Phase 3 — Document Generation
 
 **Goal**: Create implementation-ready design following `.spec/templates/PLAN_TEMPLATE.md`
+
+### Key Principles
+1. **Interfaces over Implementation**: Focus on contracts, not code
+2. **Key Files Only**: List major changes, not every file
+3. **Test Checkpoints**: Add verification steps throughout
 
 ### Output Structure
 Based on spec structure in the same folder:
@@ -95,20 +179,135 @@ Based on spec structure in the same folder:
 #### For Multi-Spec:
 - **Output**: `.spec/specs/[YYYYMMDD-feature-name]/plan-*.md`
 - **References**: Corresponding `spec-*.md` and `overview.md`
-- Create separate plan for each spec file
 
 Generate the complete technical design with:
-- All questions from Phase 1 answered
-- Complete implementation details
-- Code examples and interfaces
-- Clear implementation steps
-- Links to corresponding spec and overview
+- ✅ All critical questions answered
+- 📝 Interface definitions and pseudo-code
+- 📁 Key file changes (categorized)
+- 🧪 Test checkpoints between phases
+- 🔗 Links to spec and overview
 
-## Phase 4 — Validation & Refinement
-- Review document for completeness
-- Ensure no ambiguous statements remain
-- Verify all cross-references are accurate
-- Confirm testability of all components
+### Code Representation Guidelines
+```typescript
+// ❌ Avoid: Full implementation
+function processData(input: Data): Result {
+  // 50 lines of detailed code...
+}
 
-# Remember
-This document is the **sole reference** for implementation. If something isn't documented here, it won't be implemented correctly. Be exhaustive, be precise, be clear.
+// ✅ Prefer: Interface/Signature
+interface DataProcessor {
+  process(input: Data): Promise<Result>
+  validate(data: Data): ValidationResult
+  // Key flow: validate → transform → persist
+}
+```
+
+🧪 **Test Point**: Design review checklist
+- [ ] All interfaces clearly defined
+- [ ] No implementation details leaked
+- [ ] Test strategy included
+
+## Phase 4 — AI Validation & Save
+
+### Pre-Review Validation Checklist
+- [ ] All template sections completed
+- [ ] Interfaces defined (no full implementations)
+- [ ] Key files identified (not exhaustive list)
+- [ ] Test plans integrated with each phase
+- [ ] No ambiguous statements
+- [ ] Cross-references verified
+- [ ] Testability confirmed
+- [ ] Status set to "Ready for Review"
+
+### File Summary Guidelines
+```markdown
+# ❌ Avoid: Exhaustive file listing
+| File | Action | Purpose |
+|------|--------|---------|
+| src/utils/helper1.ts | Modify | Update helper |
+| src/utils/helper2.ts | Modify | Update helper |
+| src/utils/helper3.ts | Modify | Update helper |
+[... 20 more files]
+
+# ✅ Prefer: Categorized key files
+| Category | Key Changes | Purpose |
+|----------|------------|---------|
+| Core Logic | src/feature/*.ts | Main feature implementation |
+| API | api/endpoints/*.ts | New endpoints |
+| Tests | tests/feature/*.test.ts | Test coverage |
+| Config | config/feature.json | Feature configuration |
+```
+
+🧪 **Final Test Point**:
+- [ ] Can implementation start with this plan alone?
+- [ ] Are test points actionable?
+- [ ] Is rollback strategy clear?
+
+### Save Structure
+```
+.spec/specs/[YYYYMMDD-feature-name]/
+├── spec.md (or spec-*.md)
+├── overview.md
+└── plan.md (or plan-*.md)
+```
+
+## Phase 5 — Human Review & Approval [MANDATORY]
+
+### Review Process
+1. **Present Plan for Review**
+   ```markdown
+   ## 🔍 Ready for Human Review
+
+   The implementation plan for [Feature Name] is complete.
+
+   **Review Focus Areas:**
+   - Technical approach and architecture
+   - Phase breakdown and dependencies
+   - Test coverage and validation
+   - Missing requirements or edge cases
+
+   **Please provide:**
+   - ✅ Type "approve" to proceed
+   - 💭 Any feedback or concerns
+   - 🔧 Suggested improvements
+   ```
+
+2. **Handle Feedback & Iteration**
+
+   **Based on feedback type, determine iteration point:**
+
+   | Feedback Type | Action | Restart From |
+   |---------------|--------|--------------|
+   | ✅ Approved | Update status to "Approved" | Proceed to implementation |
+   | 📝 Minor edits | Fix typos/formatting | Phase 4 (validation & save) |
+   | 🔧 Technical adjustments | Update design/approach | Phase 3 (regenerate plan sections) |
+   | ❓ Missing requirements | Add new requirements | Phase 2 (clarifications if needed) |
+   | 🔄 Major changes | Fundamental pivot | Phase 1 (re-analyze) |
+
+   **Iteration Process:**
+   1. Update plan based on feedback
+   2. Re-run validation checklist
+   3. Update status back to "Ready for Review"
+   4. Present updated plan for re-review
+   5. Continue until approved
+
+3. **Approval Gate**
+   ⚠️ **CRITICAL**: Do NOT proceed to implementation without explicit approval
+   - Must receive clear "approve" or similar confirmation
+   - Status must be updated to "Approved"
+   - Document approval in plan status
+
+### Human Review Integration Points
+- After each major clarification session
+- Before finalizing technical decisions
+- Before moving to "Approved" status
+- When significant changes are made
+
+# Critical Reminders
+
+1. **INTERFACES OVER CODE** - Define contracts, not implementations
+2. **KEY FILES ONLY** - Focus on important changes
+3. **TEST WITH PHASES** - Integrate test plans into each phase
+4. **BE PRECISE** - No ambiguity in technical decisions
+5. **HUMAN APPROVAL REQUIRED** - Must get explicit approval before implementation
+6. **TRACK PROGRESS** - Use status progression: Draft → Ready for Review → In Review → Approved
