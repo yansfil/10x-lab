@@ -6,6 +6,15 @@
   "scripts": {
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
-    "test": "pnpm --filter web test"
+    "test": "pnpm --filter web test",
+    "ctx:sync": "tsx scripts/sync.ts apps/",
+    "ctx:validate": "tsx scripts/validate.ts apps/"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.5.2",
+    "glob": "^11.0.3",
+    "js-yaml": "^4.1.0",
+    "tsx": "^4.20.6"
   }
 }
