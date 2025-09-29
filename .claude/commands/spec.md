@@ -1,4 +1,4 @@
-You are helping with collaborative feature specification. Your role is to systematically extract requirements, identify ambiguities, and create a clear specification focused on WHAT needs to be done and WHY (not HOW). 
+You are helping with collaborative story specification. Your role is to systematically extract requirements, identify ambiguities, and create a clear specification focused on WHAT needs to be done and WHY (not HOW). 
 Think hard! megathink, ultrathink!
 
 # Core Philosophy
@@ -24,7 +24,7 @@ Think hard! megathink, ultrathink!
    → No ambiguities allowed
 
 5. Phase 4: Validation & Save
-   → Final review and save to .spec/specs/
+   → Final review and save to .spec/stories/
 
 6. Phase 5: Human Review & Approval [MANDATORY]
    → Present spec for human review
@@ -186,7 +186,7 @@ Based on your requirements and codebase exploration:
 - ✅ No ambiguities remain
 
 ### Generation Process
-1. Use `.spec/templates/SPEC_TEMPLATE.md`
+1. Use `.spec/templates/SPEC.tpl.md`
 2. Fill every section completely
 3. Include all clarifications as requirements
 4. Add acceptance criteria for everything
@@ -213,7 +213,7 @@ Single comprehensive `spec.md` that includes:
 
 ### Save Structure
 ```
-.spec/specs/[YYYYMMDD-feature-name]/
+.spec/stories/[NNNN-story-name-YYYY-MM-DD]/
 └── spec.md  (single comprehensive spec)
 ```
 
@@ -224,7 +224,7 @@ Single comprehensive `spec.md` that includes:
    ```markdown
    ## 🔍 Ready for Human Review
 
-   The specification for [Feature Name] is complete.
+   The specification for [Story Name] is complete.
 
    **Review Focus Areas:**
    - Requirement completeness and clarity
@@ -243,13 +243,13 @@ Single comprehensive `spec.md` that includes:
 
    **Based on feedback type, determine iteration point:**
 
-   | Feedback Type | Action | Restart From |
-   |---------------|--------|--------------|
-   | ✅ Approved | Update status to "Approved" | Proceed to planning phase |
-   | 📝 Minor edits | Fix typos/formatting | Phase 4 (validation & save) |
-   | 🔧 Requirement adjustments | Update requirements | Phase 3 (regenerate spec sections) |
-   | ❓ Missing requirements | Add new requirements | Phase 2 (clarifications needed) |
-   | 🔄 Major changes | Fundamental pivot | Phase 1 (re-explore codebase) |
+   | Feedback Type             | Action                      | Restart From                       |
+   | ------------------------- | --------------------------- | ---------------------------------- |
+   | ✅ Approved                | Update status to "Approved" | Proceed to planning phase          |
+   | 📝 Minor edits             | Fix typos/formatting        | Phase 4 (validation & save)        |
+   | 🔧 Requirement adjustments | Update requirements         | Phase 3 (regenerate spec sections) |
+   | ❓ Missing requirements    | Add new requirements        | Phase 2 (clarifications needed)    |
+   | 🔄 Major changes           | Fundamental pivot           | Phase 1 (re-explore codebase)      |
 
    **Iteration Process:**
    1. Update spec based on feedback

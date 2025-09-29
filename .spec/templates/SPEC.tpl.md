@@ -1,4 +1,4 @@
-# Feature Specification: [Feature Name]
+# Story Specification: [Story Name]
 
 **Date**: YYYY-MM-DD
 **Status**: Draft | Ready for Review | In Review | Approved | Complete
@@ -7,7 +7,7 @@
 **Links**:
   - Plan: [./plan.md](./plan.md)
   - Overview: [./overview.md](./overview.md)
-  - Story: `.spec/specs/[YYYYMMDD-feature-name]/`
+  - Story: `.spec/stories/[YYYYMMDD-story-name]/`
 
 ## Priority Legend
 🔴 **Critical** - Must have / Blocks progress
@@ -15,7 +15,7 @@
 🟢 **Optional** - Nice to have / Can use defaults
 
 ## Executive Summary
-*One paragraph explaining WHY this feature matters and WHAT it does for users*
+*One paragraph explaining WHY this story matters and WHAT it does for users*
 
 ## 📊 Progress Status
 | Stage  | Requirements  | Design    | Implementation | Testing   |
@@ -24,15 +24,15 @@
 
 ---
 
-## Feature Overview
+## Story Overview
 
 ### Problem Statement
 *What problem are we solving? Why does it matter?*
 
 ### Success Metrics
-*How will we know if this feature is successful?*
+*How will we know if this story is successful?*
 - [ ] Metric 1: [e.g., User can complete task in < 3 clicks]
-- [ ] Metric 2: [e.g., 80% of users understand feature without documentation]
+- [ ] Metric 2: [e.g., 80% of users understand story without documentation]
 
 ---
 
@@ -52,7 +52,7 @@ As a [user type], I want to [action] so that [benefit].
 - What if [resource limitation]?
 
 ### Out of Scope
-*Explicitly list what this feature will NOT do*
+*Explicitly list what this story will NOT do*
 - Will not support [X]
 - Does not include [Y]
 
@@ -67,7 +67,7 @@ As a [user type], I want to [action] so that [benefit].
 - 🔴 **FR-003**: System MUST [constraint or rule]
 
 ### Optional/Future Requirements
-*Nice-to-have features for later phases*
+*Nice-to-have storys for later phases*
 - 🟢 **FR-OPT-001**: System MAY [optional feature]
 
 ### Non-Functional Requirements

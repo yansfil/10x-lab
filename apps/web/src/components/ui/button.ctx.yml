@@ -1,0 +1,31 @@
+meta:
+  version: 0.0.1
+  target: /apps/web/src/components/ui/button.tsx
+
+what: |
+  A flexible and customizable button component built with React and class-variance-authority (CVA).
+  Provides multiple visual variants (default, destructive, outline, secondary, ghost, link) and
+  size options (default, sm, lg, icon) with full TypeScript support. Supports polymorphic rendering
+  through the asChild prop using Radix UI's Slot component.
+
+use_when:
+  - You need consistent button styling across your application with predefined variants
+  - You want type-safe button props with TypeScript and automatic variant handling
+  - You need to apply button styles to non-button elements (links, divs) using the asChild prop
+
+do_not_use_when:
+  - You need a completely custom button with unique styling outside the variant system
+  - You're building a button group or toggle button that requires state management
+  - You need specialized button behavior like file upload triggers or complex dropdown menus
+
+constraints:
+  - Requires Tailwind CSS for styling to work properly
+  - Depends on class-variance-authority (CVA) for variant management
+  - Uses Radix UI Slot component for polymorphic behavior
+  - All color tokens must be defined in your Tailwind theme (primary, secondary, destructive, etc.)
+
+future:
+  - Add loading state variant with spinner support
+  - Implement button group composition for segmented controls
+  - Add size variant for extra small (xs) and extra large (xl) buttons
+  - Support for icon-only tooltips when using icon size variant

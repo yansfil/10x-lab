@@ -6,7 +6,7 @@
 **Links**:
   - Spec: [./spec.md](./spec.md)
   - Overview: [./overview.md](./overview.md)
-  - Story: `.spec/specs/[YYYYMMDD-feature-name]/`
+  - Story: `.spec/stories/[YYYYMMDD-story-name]/`
 
 ## Priority Legend
 🔴 **Critical** - Must have / Blocks progress

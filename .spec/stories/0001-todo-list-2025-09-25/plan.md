@@ -2,7 +2,7 @@
 **Date**: 2025-09-25
 **Overview**: [./overview.md](./overview.md)
 **Spec**: [./spec.md](./spec.md)
-**Story**: `.spec/specs/20250925-todo-list/`
+**Story**: `.spec/stories/20250925-todo-list/`
 
 **IMPORTANT**: This plan provides detailed, step-by-step implementation instructions for building a client-side todo list application with React, Vite, TypeScript, and shadcn/ui components, using localStorage for persistence.
 
@@ -1134,31 +1134,31 @@ interface TodoStatsProps {
 
 ## 4. File Changes Summary
 
-| File | Action | Purpose |
-|------|--------|---------|
-| `pnpm-workspace.yaml` | Create | Monorepo configuration |
-| `apps/web/package.json` | Create | Project dependencies and scripts |
-| `apps/web/tsconfig.json` | Create | TypeScript configuration |
-| `apps/web/vite.config.ts` | Create | Vite and test configuration |
-| `apps/web/tailwind.config.js` | Create | Tailwind CSS configuration |
-| `apps/web/postcss.config.js` | Create | PostCSS configuration |
-| `apps/web/index.html` | Create | HTML entry point |
-| `apps/web/src/main.tsx` | Create | React entry point |
-| `apps/web/src/App.tsx` | Create | Main app component |
-| `apps/web/src/index.css` | Create | Global styles |
-| `apps/web/src/types/todo.ts` | Create | TypeScript interfaces |
-| `apps/web/src/lib/storage.ts` | Create | localStorage utility |
-| `apps/web/src/lib/utils.ts` | Create | Utility functions |
-| `apps/web/src/hooks/useTodos.ts` | Create | Todo management hook |
-| `apps/web/src/hooks/useLocalStorage.ts` | Create | Generic localStorage hook |
-| `apps/web/src/components/TodoApp.tsx` | Create | Main container component |
-| `apps/web/src/components/TodoInput.tsx` | Create | Input component |
-| `apps/web/src/components/TodoItem.tsx` | Create | Individual todo component |
-| `apps/web/src/components/TodoList.tsx` | Create | List container |
-| `apps/web/src/components/TodoStats.tsx` | Create | Statistics display |
-| `apps/web/src/components/ui/*` | Create | shadcn/ui components |
-| `apps/web/src/test/setup.ts` | Create | Test configuration |
-| `apps/web/src/**/*.test.ts(x)` | Create | Test files |
+| File                                    | Action | Purpose                          |
+| --------------------------------------- | ------ | -------------------------------- |
+| `pnpm-workspace.yaml`                   | Create | Monorepo configuration           |
+| `apps/web/package.json`                 | Create | Project dependencies and scripts |
+| `apps/web/tsconfig.json`                | Create | TypeScript configuration         |
+| `apps/web/vite.config.ts`               | Create | Vite and test configuration      |
+| `apps/web/tailwind.config.js`           | Create | Tailwind CSS configuration       |
+| `apps/web/postcss.config.js`            | Create | PostCSS configuration            |
+| `apps/web/index.html`                   | Create | HTML entry point                 |
+| `apps/web/src/main.tsx`                 | Create | React entry point                |
+| `apps/web/src/App.tsx`                  | Create | Main app component               |
+| `apps/web/src/index.css`                | Create | Global styles                    |
+| `apps/web/src/types/todo.ts`            | Create | TypeScript interfaces            |
+| `apps/web/src/lib/storage.ts`           | Create | localStorage utility             |
+| `apps/web/src/lib/utils.ts`             | Create | Utility functions                |
+| `apps/web/src/hooks/useTodos.ts`        | Create | Todo management hook             |
+| `apps/web/src/hooks/useLocalStorage.ts` | Create | Generic localStorage hook        |
+| `apps/web/src/components/TodoApp.tsx`   | Create | Main container component         |
+| `apps/web/src/components/TodoInput.tsx` | Create | Input component                  |
+| `apps/web/src/components/TodoItem.tsx`  | Create | Individual todo component        |
+| `apps/web/src/components/TodoList.tsx`  | Create | List container                   |
+| `apps/web/src/components/TodoStats.tsx` | Create | Statistics display               |
+| `apps/web/src/components/ui/*`          | Create | shadcn/ui components             |
+| `apps/web/src/test/setup.ts`            | Create | Test configuration               |
+| `apps/web/src/**/*.test.ts(x)`          | Create | Test files                       |
 
 ## 5. Validation Checklist
 

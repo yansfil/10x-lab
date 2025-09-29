@@ -30,7 +30,7 @@ Think hard! megathink, ultrathink!
 5. Phase 4: AI Validation & Save
    → Review completeness
    → Verify testability
-   → Save to .spec/specs/
+   → Save to .spec/stories/
    🧪 Test Point: Pre-review checklist
 
 6. Phase 5: Human Review & Approval [MANDATORY]
@@ -49,9 +49,8 @@ $ARGUMENTS
 - **Requirements**: "$ARGUMENTS"
 - **Reference Documents**:
   - `.spec/templates/PLAN_QUESTIONS.md`: Comprehensive question checklist
-  - `.spec/templates/PLAN_TEMPLATE.md`: Document structure
+  - `.spec/templates/PLAN.tpl.md`: Document structure
   - **Spec Document**: Corresponding `spec.md` or `spec-*.md`
-  - **Overview**: Context from `overview.md`
 
 
 # Workflow
@@ -64,7 +63,7 @@ Create comprehensive task list using TodoWrite tool:
 3. Conduct clarification sessions
 4. Generate implementation plan with integrated test plans
 5. Perform AI validation
-6. Save plan to .spec/specs/
+6. Save plan to .spec/stories/
 7. Request human review
 8. Incorporate feedback (if changes needed → repeat from step 4)
 9. Obtain explicit approval before implementation
@@ -129,11 +128,11 @@ Based on requirements and codebase:
 - [Reference existing patterns]
 
 ## 📊 Clarification Status
-| Priority | Total | ✅ Resolved | ⏳ Pending |
-|----------|-------|------------|-----------|
-| 🔴 Critical | X | Y | Z |
-| 🟡 Important | X | Y | Z |
-| 🟢 Optional | X | Y | Z |
+| Priority    | Total | ✅ Resolved | ⏳ Pending |
+| ----------- | ----- | ---------- | --------- |
+| 🔴 Critical  | X     | Y          | Z         |
+| 🟡 Important | X     | Y          | Z         |
+| 🟢 Optional  | X     | Y          | Z         |
 
 ## 🔴 Critical Questions (MUST be answered)
 
@@ -162,7 +161,7 @@ Based on requirements and codebase:
 
 ## Phase 3 — Document Generation
 
-**Goal**: Create implementation-ready design following `.spec/templates/PLAN_TEMPLATE.md`
+**Goal**: Create implementation-ready design following `.spec/templates/PLAN.tpl.md`
 
 ### Key Principles
 1. **Interfaces over Implementation**: Focus on contracts, not code
@@ -172,13 +171,8 @@ Based on requirements and codebase:
 ### Output Structure
 Based on spec structure in the same folder:
 
-#### For Single Spec:
-- **Output**: `.spec/specs/[YYYYMMDD-feature-name]/plan.md`
-- **References**: `spec.md` and `overview.md`
-
-#### For Multi-Spec:
-- **Output**: `.spec/specs/[YYYYMMDD-feature-name]/plan-*.md`
-- **References**: Corresponding `spec-*.md` and `overview.md`
+- **Output**: `.spec/stories/[NNNN-story-name-YYYY-MM-DD]/plan.md`
+- **References**: `spec.md`
 
 Generate the complete technical design with:
 - ✅ All critical questions answered
@@ -222,20 +216,20 @@ interface DataProcessor {
 ### File Summary Guidelines
 ```markdown
 # ❌ Avoid: Exhaustive file listing
-| File | Action | Purpose |
-|------|--------|---------|
+| File                 | Action | Purpose       |
+| -------------------- | ------ | ------------- |
 | src/utils/helper1.ts | Modify | Update helper |
 | src/utils/helper2.ts | Modify | Update helper |
 | src/utils/helper3.ts | Modify | Update helper |
 [... 20 more files]
 
 # ✅ Prefer: Categorized key files
-| Category | Key Changes | Purpose |
-|----------|------------|---------|
-| Core Logic | src/feature/*.ts | Main feature implementation |
-| API | api/endpoints/*.ts | New endpoints |
-| Tests | tests/feature/*.test.ts | Test coverage |
-| Config | config/feature.json | Feature configuration |
+| Category   | Key Changes             | Purpose                     |
+| ---------- | ----------------------- | --------------------------- |
+| Core Logic | src/feature/*.ts        | Main feature implementation |
+| API        | api/endpoints/*.ts      | New endpoints               |
+| Tests      | tests/feature/*.test.ts | Test coverage               |
+| Config     | config/feature.json     | Feature configuration       |
 ```
 
 🧪 **Final Test Point**:
@@ -245,9 +239,8 @@ interface DataProcessor {
 
 ### Save Structure
 ```
-.spec/specs/[YYYYMMDD-feature-name]/
+.spec/stories/[NNNN-story-name-YYYY-MM-DD]/
 ├── spec.md (or spec-*.md)
-├── overview.md
 └── plan.md (or plan-*.md)
 ```
 
@@ -258,7 +251,7 @@ interface DataProcessor {
    ```markdown
    ## 🔍 Ready for Human Review
 
-   The implementation plan for [Feature Name] is complete.
+   The implementation plan for [Story Name] is complete.
 
    **Review Focus Areas:**
    - Technical approach and architecture
@@ -276,13 +269,13 @@ interface DataProcessor {
 
    **Based on feedback type, determine iteration point:**
 
-   | Feedback Type | Action | Restart From |
-   |---------------|--------|--------------|
-   | ✅ Approved | Update status to "Approved" | Proceed to implementation |
-   | 📝 Minor edits | Fix typos/formatting | Phase 4 (validation & save) |
-   | 🔧 Technical adjustments | Update design/approach | Phase 3 (regenerate plan sections) |
-   | ❓ Missing requirements | Add new requirements | Phase 2 (clarifications if needed) |
-   | 🔄 Major changes | Fundamental pivot | Phase 1 (re-analyze) |
+   | Feedback Type           | Action                      | Restart From                       |
+   | ----------------------- | --------------------------- | ---------------------------------- |
+   | ✅ Approved              | Update status to "Approved" | Proceed to implementation          |
+   | 📝 Minor edits           | Fix typos/formatting        | Phase 4 (validation & save)        |
+   | 🔧 Technical adjustments | Update design/approach      | Phase 3 (regenerate plan sections) |
+   | ❓ Missing requirements  | Add new requirements        | Phase 2 (clarifications if needed) |
+   | 🔄 Major changes         | Fundamental pivot           | Phase 1 (re-analyze)               |
 
    **Iteration Process:**
    1. Update plan based on feedback
