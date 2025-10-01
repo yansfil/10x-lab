@@ -7,8 +7,12 @@
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
     "test": "pnpm --filter web test",
-    "ctx:sync": "tsx scripts/sync.ts apps/",
-    "ctx:validate": "tsx scripts/validate.ts apps/"
+    "ctx:sync": "tsx scripts/sync.ts",
+    "ctx:sync:local": "tsx scripts/sync.ts local",
+    "ctx:sync:global": "tsx scripts/sync.ts global",
+    "ctx:validate": "tsx scripts/validate.ts",
+    "ctx:validate:local": "tsx scripts/validate.ts local",
+    "ctx:validate:global": "tsx scripts/validate.ts global"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

@@ -63,3 +63,43 @@ export interface ContextRegistry {
     errors: string[];
   };
 }
+
+// Global Context Registry Types
+
+export interface GlobalContextFile {
+  path: string;
+  checksum: string;
+  last_modified: string;
+  ai_comment?: string | null;
+}
+
+export interface GlobalContextFolder {
+  folder_checksum: string;
+  file_count: number;
+  last_file_modified: string;
+  ai_comment?: string | null;
+  files: GlobalContextFile[];
+}
+
+export interface GlobalContextRegistry {
+  meta: {
+    version: string;
+    last_synced: string;
+    last_ai_update?: string | null;
+  };
+  [folderName: string]: GlobalContextFolder | GlobalContextRegistry['meta'];
+}
+
+export interface SyncResult {
+  success: boolean;
+  changes?: string[];
+  registry?: any;
+  needsAnnotation?: AnnotationNeeded[];
+  validation?: string[];
+}
+
+export interface AnnotationNeeded {
+  type: 'file' | 'folder';
+  path: string;
+  reason?: 'new' | 'content_changed' | 'missing_comment';
+}

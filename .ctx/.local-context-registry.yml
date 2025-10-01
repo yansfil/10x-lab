@@ -1,0 +1,26 @@
+# Local Context Registry
+# ⚠️ AUTO-GENERATED - DO NOT EDIT
+# Run 'pnpm ctx:sync:local' to update
+# Generated: 2025-10-01T09:29:17.073Z
+
+meta:
+  version: 1.0.0
+  total_contexts: 1
+  last_sync: '2025-10-01T09:29:17.072Z'
+  generation_command: pnpm ctx:sync:local
+contexts:
+  /src/utils/url.ts:
+    what: Comprehensive URL manipulation utilities for parsing, building,
+    use_when:
+      - You need to parse, build, or manipulate query parameters in URLs
+      - You need to validate URLs or extract specific parts (domain, extension, hash)
+      - You need to join URL paths, convert relative to absolute URLs, or encode URLs safely
+      - You're working with URL-related operations and need consistent, tested utilities
+    source: src/utils/url.ctx.yml
+    hash: 43ecb9542e41
+indexes:
+  by_category: {}
+  entry_points: []
+validation:
+  missing_contexts: []
+  errors: []

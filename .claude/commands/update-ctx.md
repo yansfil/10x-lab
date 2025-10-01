@@ -7,7 +7,7 @@ You are helping to create or update module context documentation. Your role is t
 ```
 1. Parse arguments (target path + optional user context)
 2. Determine operation mode (CREATE vs UPDATE)
-3. Read template from .spec/templates/CONTEXT.tpl.md
+3. Read template from .ctx/templates/CONTEXT.tpl.md
 4. Analyze code structure or existing context
 5. Generate or update ctx.yml with user input
 6. Run validation
@@ -27,7 +27,7 @@ USER_CONTEXT="$ARGUMENTS[1]"  # Optional: user-provided context
 ```
 
 ## Step 2: Read Template
-**CRITICAL**: First, READ the complete template documentation from `.spec/templates/CONTEXT.tpl.md`
+**CRITICAL**: First, READ the complete template documentation from `.ctx/templates/CONTEXT.tpl.md`
 - This file contains the current template structure
 - It includes field descriptions and examples
 - The template format may change, so always read it fresh
@@ -97,7 +97,7 @@ Update existing ctx.yml file:
 Run the validation script:
 
 ```bash
-bash .spec/scripts/validate-ctx.sh "$OUTPUT_FILE"
+bash .ctx/scripts/validate-ctx.sh "$OUTPUT_FILE"
 ```
 
 ## Step 7: Output
@@ -147,7 +147,7 @@ Report the results based on mode:
 - **USER CONTEXT**: Always incorporate user-provided context appropriately
 - **VERSION CONTROL**: Increment version on updates (0.0.1 → 0.0.2)
 - **YAML FORMAT**: Use YAML structure for ctx.yml files
-- **ALWAYS** read `.spec/templates/CONTEXT.tpl.md` first for field definitions
+- **ALWAYS** read `.ctx/templates/CONTEXT.tpl.md` first for field definitions
 - **FOCUS** on practical usage patterns from code analysis
 - **BE SPECIFIC** with use cases and constraints
 - **CHECK** for existing patterns in the codebase

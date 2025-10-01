@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as process from 'process';
 import { parseContextFile, parseContextRegistry } from './lib/parser';
-import { validateContextFile } from './lib/validator';
+import { validateContextFile, validateGlobalContexts } from './lib/validator';
 import { ValidationResult } from './lib/types';
 
 // ANSI color codes
@@ -138,10 +138,10 @@ async function validateAllFiles(rootPath: string = process.cwd()): Promise<void>
     printValidationResult(result);
   }
 
-  // Check registry consistency
-  console.log(`\n${colorize('🔍 Checking registry consistency...', 'cyan')}`);
+  // Check local registry consistency
+  console.log(`\n${colorize('🔍 Checking local registry consistency...', 'cyan')}`);
 
-  const registryPath = path.join(rootPath, '.spec', 'context-registry.yml');
+  const registryPath = path.join(rootPath, '.ctx', '.local-context-registry.yml');
   const registryErrors: string[] = [];
 
   if (fs.existsSync(registryPath)) {
@@ -172,13 +172,13 @@ async function validateAllFiles(rootPath: string = process.cwd()): Promise<void>
         registryErrors.forEach(error => {
           console.log(`${colorize('✗', 'red')} ${error}`);
         });
-        console.log(colorize('\nRun "pnpm sync:contexts" to update the registry', 'yellow'));
+        console.log(colorize('\nRun "pnpm ctx:sync:local" to update the registry', 'yellow'));
       }
     } else {
       console.log(colorize('⚠ Could not parse registry file', 'yellow'));
     }
   } else {
-    console.log(colorize('⚠ Registry file not found. Run "pnpm sync:contexts" to generate it', 'yellow'));
+    console.log(colorize('⚠ Registry file not found. Run "pnpm ctx:sync:local" to generate it', 'yellow'));
   }
 
   // Print summary
@@ -214,22 +214,64 @@ async function validateAllFiles(rootPath: string = process.cwd()): Promise<void>
   }
 }
 
+async function validateGlobal(): Promise<void> {
+  console.log(colorize('🌐 Validating global context registry...', 'cyan'));
+  console.log(colorize('=' .repeat(40), 'gray'));
+
+  const result = await validateGlobalContexts();
+
+  // Print errors
+  if (result.errors.length > 0) {
+    console.log(colorize('\n❌ Errors:', 'red'));
+    result.errors.forEach(error => {
+      console.log(`  ${colorize('✗', 'red')} ${error}`);
+    });
+  }
+
+  // Print warnings
+  if (result.warnings.length > 0) {
+    console.log(colorize('\n⚠️  Warnings:', 'yellow'));
+    result.warnings.forEach(warning => {
+      console.log(`  ${colorize('⚠', 'yellow')} ${warning}`);
+    });
+  }
+
+  // Print summary
+  console.log(colorize('\n' + '=' .repeat(40), 'gray'));
+  console.log(colorize('📊 Summary', 'cyan'));
+  console.log(colorize('=' .repeat(40), 'gray'));
+
+  console.log(`Errors: ${result.errors.length}`);
+  console.log(`Warnings: ${result.warnings.length}`);
+
+  if (!result.valid) {
+    console.log(`\n${colorize('❌ Validation failed', 'red')}`);
+    process.exit(1);
+  } else if (result.warnings.length > 0) {
+    console.log(`\n${colorize('⚠️  Passed with warnings', 'yellow')}`);
+    console.log(colorize('💡 Run /sync-global-ctx in Claude Code to generate AI annotations', 'cyan'));
+  } else {
+    console.log(`\n${colorize('✅ All validations passed', 'green')}`);
+  }
+}
+
 async function main() {
   const args = process.argv.slice(2);
 
   // Check for help flag
   if (args.includes('--help') || args.includes('-h')) {
-    console.log('Usage: validate-ctx [path]');
+    console.log('Usage: validate-ctx [target] [path]');
     console.log('\nArguments:');
-    console.log('  path               File or directory to validate (optional)');
+    console.log('  target             "local" or "global" (optional, defaults to local)');
+    console.log('  path               File or directory to validate for local (optional)');
     console.log('\nOptions:');
     console.log('  -h, --help         Show this help message');
-    console.log('  --ci               CI mode (JSON output)');
     console.log('\nExamples:');
-    console.log('  validate-ctx                              # Validate all context files in current directory');
-    console.log('  validate-ctx ./apps/web                   # Validate all context files in ./apps/web');
+    console.log('  validate-ctx                              # Validate all local context files');
+    console.log('  validate-ctx local                        # Validate all local context files');
+    console.log('  validate-ctx global                       # Validate global context registry');
+    console.log('  validate-ctx local ./apps/web             # Validate local contexts in ./apps/web');
     console.log('  validate-ctx button.ctx.yml               # Validate specific file');
-    console.log('  validate-ctx /absolute/path/to/project    # Validate all files in absolute path');
     process.exit(0);
   }
 
@@ -237,28 +279,28 @@ async function main() {
   const fileArgs = args.filter(arg => !arg.startsWith('--') && !arg.startsWith('-'));
 
   try {
-    if (fileArgs.length > 0) {
-      const inputPath = fileArgs[0];
-      const resolvedPath = path.resolve(inputPath);
+    const target = fileArgs[0];
 
-      // Check if input exists
-      if (!fs.existsSync(resolvedPath)) {
-        console.error(colorize(`Error: Path does not exist: ${inputPath}`, 'red'));
-        process.exit(1);
-      }
+    if (target === 'global') {
+      // Validate global contexts
+      await validateGlobal();
+    } else if (target === 'local' || !target) {
+      // Validate local contexts (default)
+      await validateAllFiles(process.cwd());
+    } else if (fs.existsSync(target)) {
+      // Target is a path
+      const resolvedPath = path.resolve(target);
 
-      // Check if input is a directory or a file
       if (fs.statSync(resolvedPath).isDirectory()) {
-        // Validate all files in the specified directory
         console.log(colorize(`📂 Validating directory: ${resolvedPath}`, 'gray'));
         await validateAllFiles(resolvedPath);
       } else {
-        // Validate specific file
         await validateSingleFile(resolvedPath);
       }
     } else {
-      // Validate all files in current directory
-      await validateAllFiles(process.cwd());
+      console.error(colorize(`Error: Invalid target or path: ${target}`, 'red'));
+      console.error(colorize('Use "local", "global", or a valid file/directory path', 'yellow'));
+      process.exit(1);
     }
   } catch (error) {
     console.error(colorize(`Error: ${error}`, 'red'));

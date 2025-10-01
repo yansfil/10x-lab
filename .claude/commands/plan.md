@@ -30,7 +30,7 @@ Think hard! megathink, ultrathink!
 5. Phase 4: AI Validation & Save
    → Review completeness
    → Verify testability
-   → Save to .spec/stories/
+   → Save to .ctx/stories/
    🧪 Test Point: Pre-review checklist
 
 6. Phase 5: Human Review & Approval [MANDATORY]
@@ -48,8 +48,10 @@ $ARGUMENTS
 - **Focus**: Technical HOW with clear interfaces, not detailed code implementations
 - **Requirements**: "$ARGUMENTS"
 - **Reference Documents**:
-  - `.spec/templates/PLAN_QUESTIONS.md`: Comprehensive question checklist
-  - `.spec/templates/PLAN.tpl.md`: Document structure
+  - `.ctx/templates/PLAN_QUESTIONS.md`: Comprehensive question checklist
+  - `.ctx/templates/PLAN.tpl.md`: Document structure
+  - `.ctx/.global-context-registry.yml`: Global context index with AI annotations
+  - `.ctx/.local-context-registry.yml`: Local module context index
   - **Spec Document**: Corresponding `spec.md` or `spec-*.md`
 
 
@@ -63,7 +65,7 @@ Create comprehensive task list using TodoWrite tool:
 3. Conduct clarification sessions
 4. Generate implementation plan with integrated test plans
 5. Perform AI validation
-6. Save plan to .spec/stories/
+6. Save plan to .ctx/stories/
 7. Request human review
 8. Incorporate feedback (if changes needed → repeat from step 4)
 9. Obtain explicit approval before implementation
@@ -77,14 +79,34 @@ Create comprehensive task list using TodoWrite tool:
 
 ## Phase 1 — Analysis & Questions
 
-**Goal**: Completely fill out ALL questions from **`.spec/templates/PLAN_QUESTIONS.md`** by exploring the codebase and understanding the requirements.
+**Goal**: Completely fill out ALL questions from **`.ctx/templates/PLAN_QUESTIONS.md`** by exploring the codebase and understanding the requirements.
+
+### Step 1.0 — Load Context (FIRST)
+
+**CRITICAL:** Before any codebase exploration, load project context:
+
+1. **Read Global Context Registry:**
+   - Read `.ctx/.global-context-registry.yml`
+   - Review AI comments to understand which contexts are relevant
+   - Based on the task, identify relevant folders (architecture, rules, etc.)
+   - Read the specific context files mentioned in AI comments
+
+2. **Read Local Context Registry:**
+   - Read `.ctx/.local-context-registry.yml`
+   - Search for modules related to the task
+   - Identify relevant existing modules to understand patterns
+
+3. **Context-Driven Exploration:**
+   - Use context information to guide codebase exploration
+   - Follow references in context files
+   - Understand existing patterns before diving into code
 
 ### Step 1.1 — Codebase Exploration
-Before generating questions, thoroughly explore the existing codebase:
+After loading context, thoroughly explore the existing codebase:
 
 1. **Understand Current Architecture**
    - Search for relevant files, modules, and components
-   - Identify existing patterns and conventions
+   - Identify existing patterns and conventions (from contexts)
    - Map dependencies and relationships
    - Review existing tests and documentation
 
@@ -101,7 +123,7 @@ Before generating questions, thoroughly explore the existing codebase:
    - Authentication and authorization
 
 ### Step 1.2 — Generate Comprehensive Questions
-Based on your codebase exploration and requirements, **answer or ask about EVERY item** in `.spec/templates/PLAN_QUESTIONS.md`:
+Based on your codebase exploration and requirements, **answer or ask about EVERY item** in `.ctx/templates/PLAN_QUESTIONS.md`:
 
 **Required Sections - Must be fully addressed:**
 - Scope & Impact: Complete all sub-questions
@@ -161,7 +183,7 @@ Based on requirements and codebase:
 
 ## Phase 3 — Document Generation
 
-**Goal**: Create implementation-ready design following `.spec/templates/PLAN.tpl.md`
+**Goal**: Create implementation-ready design following `.ctx/templates/PLAN.tpl.md`
 
 ### Key Principles
 1. **Interfaces over Implementation**: Focus on contracts, not code
@@ -171,7 +193,7 @@ Based on requirements and codebase:
 ### Output Structure
 Based on spec structure in the same folder:
 
-- **Output**: `.spec/stories/[NNNN-story-name-YYYY-MM-DD]/plan.md`
+- **Output**: `.ctx/stories/[NNNN-story-name-YYYY-MM-DD]/plan.md`
 - **References**: `spec.md`
 
 Generate the complete technical design with:
@@ -239,7 +261,7 @@ interface DataProcessor {
 
 ### Save Structure
 ```
-.spec/stories/[NNNN-story-name-YYYY-MM-DD]/
+.ctx/stories/[NNNN-story-name-YYYY-MM-DD]/
 ├── spec.md (or spec-*.md)
 └── plan.md (or plan-*.md)
 ```

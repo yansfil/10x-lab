@@ -1,6 +1,13 @@
 # 10x Lab
 
-A playground for context-driven development experiments.
+A playground for context growing development experiments.
+
+1. Making context a first-class artifact (not a comment)
+2. Enforcing synchronization mechanically (not manually)
+3. Creating queryable indexes (not search)
+   
+The key insight: Context is not a side effect of code - it's a co-evolving entity. When you treat it as such, you unlock:
+
 
 ## Purpose
 
@@ -13,3 +20,4 @@ Context-driven development emphasizes:
 - Adapting solutions to real-world constraints and requirements
 - Iterative refinement based on contextual feedback
 - Pragmatic decision-making over rigid methodologies
+

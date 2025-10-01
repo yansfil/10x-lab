@@ -24,7 +24,7 @@ Think hard! megathink, ultrathink!
    → No ambiguities allowed
 
 5. Phase 4: Validation & Save
-   → Final review and save to .spec/stories/
+   → Final review and save to .ctx/stories/
 
 6. Phase 5: Human Review & Approval [MANDATORY]
    → Present spec for human review
@@ -40,6 +40,10 @@ $ARGUMENTS
 - **Purpose**: Create an unambiguous specification that defines WHAT and WHY
 - **Focus**: Business requirements, user value, acceptance criteria (no technical implementation)
 - **Output**: Single comprehensive spec.md (no splitting, no overview.md)
+- **Reference Documents**:
+  - `.ctx/.global-context-registry.yml`: Global context index with AI annotations
+  - `.ctx/.local-context-registry.yml`: Local module context index
+  - `.ctx/templates/SPEC_QUESTIONS.md`: Comprehensive question checklist
 
 # Workflow
 
@@ -58,7 +62,29 @@ Create comprehensive task list using TodoWrite tool:
 
 ## Phase 1 — Codebase Exploration
 
-### Objectives
+### Step 1.0 — Load Context (FIRST)
+
+**CRITICAL:** Before any codebase exploration, load project context:
+
+1. **Read Global Context Registry:**
+   - Read `.ctx/.global-context-registry.yml`
+   - Review AI comments to understand project structure
+   - Based on the task, identify relevant folders (architecture, rules, etc.)
+   - Read the specific context files mentioned in AI comments
+
+2. **Read Local Context Registry:**
+   - Read `.ctx/.local-context-registry.yml`
+   - Search for modules related to the feature
+   - Identify relevant existing modules
+
+3. **Context-Driven Exploration:**
+   - Use context information to guide exploration
+   - Understand existing patterns before diving into code
+
+### Step 1.1 — Codebase Exploration
+
+After loading context:
+
 1. Search for similar features and patterns
 2. Identify existing conventions and architecture
 3. Note integration points and constraints
@@ -76,7 +102,7 @@ Document all findings that will inform the specification:
 **THIS IS THE MOST CRITICAL PHASE - NO SHORTCUTS ALLOWED**
 
 ### Step 1: Initial Analysis
-Using `.spec/templates/SPEC_QUESTIONS.md`, systematically analyze every aspect:
+Using `.ctx/templates/SPEC_QUESTIONS.md`, systematically analyze every aspect:
 
 For each question category:
 - ✅ **Can answer**: Provide answer with confidence
@@ -186,7 +212,7 @@ Based on your requirements and codebase exploration:
 - ✅ No ambiguities remain
 
 ### Generation Process
-1. Use `.spec/templates/SPEC.tpl.md`
+1. Use `.ctx/templates/SPEC.tpl.md`
 2. Fill every section completely
 3. Include all clarifications as requirements
 4. Add acceptance criteria for everything
@@ -213,7 +239,7 @@ Single comprehensive `spec.md` that includes:
 
 ### Save Structure
 ```
-.spec/stories/[NNNN-story-name-YYYY-MM-DD]/
+.ctx/stories/[NNNN-story-name-YYYY-MM-DD]/
 └── spec.md  (single comprehensive spec)
 ```
 

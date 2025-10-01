@@ -1,0 +1,24 @@
+meta:
+  version: 0.0.1
+  target: /src/utils/url.ts
+
+what: |
+  Comprehensive URL manipulation utilities for parsing, building,
+  validating, and transforming URLs and query parameters. Handles
+  both absolute and relative URLs with robust error handling.
+
+use_when:
+  - You need to parse, build, or manipulate query parameters in URLs
+  - You need to validate URLs or extract specific parts (domain, extension, hash)
+  - You need to join URL paths, convert relative to absolute URLs, or encode URLs safely
+  - You're working with URL-related operations and need consistent, tested utilities
+
+do_not_use_when:
+  - You only need simple URL operations that native URL API can handle directly
+  - You're working in an environment without URL API support (very old browsers)
+  - You need streaming URL parsing for extremely large URLs (this loads full URL in memory)
+
+future:
+  - Add URL normalization (canonical URL generation)
+  - Add support for URL templates (RFC 6570)
+  - Add bulk query parameter operations for performance

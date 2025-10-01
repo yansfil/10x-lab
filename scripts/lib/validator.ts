@@ -131,3 +131,91 @@ export function validateContextFile(content: ContextFile, filePath: string): Val
   const validator = new ContextValidator();
   return validator.validate(content, filePath);
 }
+
+// Global Context Validation
+
+import { GlobalContextRegistry, GlobalContextFolder } from './types';
+import * as yaml from 'js-yaml';
+
+export interface GlobalValidationResult {
+  valid: boolean;
+  errors: string[];
+  warnings: string[];
+}
+
+export async function validateGlobalContexts(): Promise<GlobalValidationResult> {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  const registryPath = path.join(process.cwd(), '.ctx', '.global-context-registry.yml');
+
+  // Check if registry exists
+  if (!fs.existsSync(registryPath)) {
+    errors.push('Global context registry not found. Run "pnpm ctx:sync:global" to generate it.');
+    return { valid: false, errors, warnings };
+  }
+
+  try {
+    // Load registry
+    const content = fs.readFileSync(registryPath, 'utf-8');
+    const yamlContent = content
+      .split('\n')
+      .filter(line => !line.trim().startsWith('#') || line.includes('ai_comment'))
+      .join('\n');
+
+    const registry = yaml.load(yamlContent) as GlobalContextRegistry;
+
+    if (!registry || !registry.meta) {
+      errors.push('Registry format is invalid');
+      return { valid: false, errors, warnings };
+    }
+
+    // Validate each folder
+    for (const [folderName, folderData] of Object.entries(registry)) {
+      if (folderName === 'meta') continue;
+
+      const folder = folderData as GlobalContextFolder;
+
+      // Check if folder-level comment exists
+      if (!folder.ai_comment) {
+        warnings.push(`Folder "${folderName}" has no AI comment`);
+      }
+
+      // Validate each file
+      for (const file of folder.files) {
+        const fullPath = path.join(process.cwd(), '.ctx', file.path);
+
+        // Check if file exists
+        if (!fs.existsSync(fullPath)) {
+          errors.push(`File referenced in registry does not exist: ${file.path}`);
+          continue;
+        }
+
+        // Check if AI comment exists
+        if (!file.ai_comment) {
+          warnings.push(`File "${file.path}" has no AI comment`);
+        }
+
+        // Check checksum consistency
+        const actualChecksum = computeFileChecksum(fullPath);
+        if (actualChecksum !== file.checksum) {
+          warnings.push(`File "${file.path}" checksum mismatch - content may have changed since last sync`);
+        }
+      }
+    }
+
+    return {
+      valid: errors.length === 0,
+      errors,
+      warnings,
+    };
+  } catch (error) {
+    errors.push(`Failed to validate global registry: ${error}`);
+    return { valid: false, errors, warnings };
+  }
+}
+
+function computeFileChecksum(filePath: string): string {
+  const { computeFileChecksum: compute } = require('./checksumUtil');
+  return compute(filePath);
+}
