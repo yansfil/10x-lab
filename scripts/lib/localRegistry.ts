@@ -159,22 +159,66 @@ export async function syncLocalContexts(rootPath: string = '.'): Promise<SyncRes
     }
 
     const outputPath = path.join(ctxDir, '.local-context-registry.yml');
-    const yamlContent = yaml.dump(registry, {
-      lineWidth: -1,
-      noRefs: true,
-      sortKeys: false,
-    });
 
-    const header = `# Local Context Registry
+    // Load existing registry for comparison
+    let existingRegistry: ContextRegistry | null = null;
+    if (fs.existsSync(outputPath)) {
+      try {
+        const existingContent = fs.readFileSync(outputPath, 'utf-8');
+        const yamlContent = existingContent
+          .split('\n')
+          .filter(line => !line.trim().startsWith('#'))
+          .join('\n');
+        existingRegistry = yaml.load(yamlContent) as ContextRegistry;
+      } catch (error) {
+        console.error(`⚠️  Failed to load existing registry:`, error);
+      }
+    }
+
+    // Compare registries (excluding meta.last_sync)
+    let hasChanges = false;
+    if (existingRegistry) {
+      const newRegistryWithoutTimestamp = { ...registry };
+      const existingRegistryWithoutTimestamp = { ...existingRegistry };
+
+      // Remove timestamps for comparison
+      if (newRegistryWithoutTimestamp.meta) {
+        delete (newRegistryWithoutTimestamp.meta as any).last_sync;
+      }
+      if (existingRegistryWithoutTimestamp.meta) {
+        delete (existingRegistryWithoutTimestamp.meta as any).last_sync;
+      }
+
+      const newContent = JSON.stringify(newRegistryWithoutTimestamp);
+      const existingContent = JSON.stringify(existingRegistryWithoutTimestamp);
+      hasChanges = newContent !== existingContent;
+    } else {
+      hasChanges = true; // No existing registry, always write
+    }
+
+    // Only write if there are actual changes
+    if (hasChanges) {
+      const yamlContent = yaml.dump(registry, {
+        lineWidth: -1,
+        noRefs: true,
+        sortKeys: false,
+      });
+
+      const header = `# Local Context Registry
 # ⚠️ AUTO-GENERATED - DO NOT EDIT
 # Run 'pnpm ctx:sync:local' to update
 # Generated: ${new Date().toISOString()}
 
 `;
 
-    fs.writeFileSync(outputPath, header + yamlContent);
+      fs.writeFileSync(outputPath, header + yamlContent);
+    }
 
-    console.log('✅ Local context registry generated successfully!');
+    if (hasChanges) {
+      console.log('✅ Local context registry updated successfully!');
+    } else {
+      console.log('✅ Local context registry is up to date (no changes)');
+    }
     console.log(`📍 Location: ${outputPath}`);
     console.log(`📊 Statistics:`);
     console.log(`   - Total contexts: ${registry.meta.total_contexts}`);

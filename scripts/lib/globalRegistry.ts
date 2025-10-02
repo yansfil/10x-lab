@@ -184,25 +184,53 @@ export async function syncGlobalContexts(): Promise<SyncResult> {
     // Detect what needs AI annotation
     const needsAnnotation = detectAnnotationNeeds(newRegistry, existingRegistry);
 
-    // Save registry
-    const outputPath = path.join(CTX_ROOT, OUTPUT_FILE);
-    const yamlContent = yaml.dump(newRegistry, {
-      lineWidth: -1,
-      noRefs: true,
-      sortKeys: false,
-    });
+    // Compare with existing registry (excluding meta.last_synced)
+    let hasChanges = false;
+    if (existingRegistry) {
+      const newRegistryWithoutTimestamp = { ...newRegistry };
+      const existingRegistryWithoutTimestamp = { ...existingRegistry };
 
-    const header = `# Global Context Registry
+      // Remove timestamps for comparison
+      if (newRegistryWithoutTimestamp.meta) {
+        delete (newRegistryWithoutTimestamp.meta as any).last_synced;
+      }
+      if (existingRegistryWithoutTimestamp.meta) {
+        delete (existingRegistryWithoutTimestamp.meta as any).last_synced;
+      }
+
+      const newContent = JSON.stringify(newRegistryWithoutTimestamp);
+      const existingContent = JSON.stringify(existingRegistryWithoutTimestamp);
+      hasChanges = newContent !== existingContent;
+    } else {
+      hasChanges = true; // No existing registry, always write
+    }
+
+    const outputPath = path.join(CTX_ROOT, OUTPUT_FILE);
+
+    // Only write if there are actual changes
+    if (hasChanges) {
+      const yamlContent = yaml.dump(newRegistry, {
+        lineWidth: -1,
+        noRefs: true,
+        sortKeys: false,
+      });
+
+      const header = `# Global Context Registry
 # ⚠️ AUTO-GENERATED - DO NOT EDIT
 # Run 'pnpm ctx:sync:global' to update
 # Generated: ${new Date().toISOString()}
 
 `;
 
-    fs.writeFileSync(outputPath, header + yamlContent);
+      fs.writeFileSync(outputPath, header + yamlContent);
+    }
 
     // Report results
-    console.log('✅ Global context registry generated successfully!');
+    if (hasChanges) {
+      console.log('✅ Global context registry updated successfully!');
+    } else {
+      console.log('✅ Global context registry is up to date (no changes)');
+    }
     console.log(`📍 Location: ${outputPath}`);
     console.log(`📊 Statistics:`);
 
