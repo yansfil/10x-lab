@@ -1,8 +1,15 @@
-You are an AI assistant helping with software design and implementation planning. Your role is to create a comprehensive design document that serves as the single source of truth for implementation. 
-Think hard! megathink, ultrathink!
+You are an AI assistant helping with software design and implementation planning. Your role is to create a comprehensive design document that serves as the single source of truth for implementation.
+
+**AI Instructions**:
+- Analyze all edge cases before responding
+- Question ambiguous requirements aggressively
+- Prioritize clarity over speed
+- Think step-by-step through logic
 
 # Core Philosophy
 **IMPLEMENTATION CLARITY** - Every technical detail must be unambiguous. The plan should be executable without further clarification.
+
+**This workflow focuses on HOW** - technical design, architecture decisions, and implementation strategy based on approved spec.
 
 # Execution Flow (STRICT ORDER)
 ```
@@ -22,7 +29,7 @@ Think hard! megathink, ultrathink!
    🧪 Test Point: Requirements completeness check
 
 4. Phase 3: Document Generation
-   → Create plan using PLAN_TEMPLATE
+   → Create plan using .ctx/templates/PLAN.tpl.md
    → Focus on interfaces over implementation
    → Include test checkpoints
    🧪 Test Point: Design validation
@@ -52,7 +59,7 @@ $ARGUMENTS
   - `.ctx/templates/PLAN.tpl.md`: Document structure
   - `.ctx/.global-context-registry.yml`: Global context index with AI annotations
   - `.ctx/.local-context-registry.yml`: Local module context index
-  - **Spec Document**: Corresponding `spec.md` or `spec-*.md`
+  - **Spec Document**: Corresponding `spec.md`
 
 
 # Workflow
@@ -79,60 +86,28 @@ Create comprehensive task list using TodoWrite tool:
 
 ## Phase 1 — Analysis & Questions
 
-**Goal**: Completely fill out ALL questions from **`.ctx/templates/PLAN_QUESTIONS.md`** by exploring the codebase and understanding the requirements.
+**Goal**: Understand existing codebase to answer questions from `.ctx/templates/PLAN_QUESTIONS.md`.
 
-### Step 1.0 — Load Context (FIRST)
+### How to Explore
 
-**CRITICAL:** Before any codebase exploration, load project context:
+1. **Check Context (optional hints, not rules):**
+   - Read `.ctx/.global-context-registry.yml` - scan AI comments for relevant docs
+   - Read `.ctx/.local-context-registry.yml` - find related modules
+   - These are **navigation hints**, not absolute truth
 
-1. **Read Global Context Registry:**
-   - Read `.ctx/.global-context-registry.yml`
-   - Review AI comments to understand which contexts are relevant
-   - Based on the task, identify relevant folders (architecture, rules, etc.)
-   - Read the specific context files mentioned in AI comments
+2. **Search & Read Code:**
+   - Grep for similar implementations/patterns
+   - Glob for related files (tests, types, configs)
+   - Read actual source code and `.ctx.yml` files
+   - Find integration points, constraints, reusable components
 
-2. **Read Local Context Registry:**
-   - Read `.ctx/.local-context-registry.yml`
-   - Search for modules related to the task
-   - Identify relevant existing modules to understand patterns
+3. **Document Findings:**
+   - What patterns/architecture exist
+   - What technical constraints were found
+   - What can be reused/extended
+   - What's still unclear
 
-3. **Context-Driven Exploration:**
-   - Use context information to guide codebase exploration
-   - Follow references in context files
-   - Understand existing patterns before diving into code
-
-### Step 1.1 — Codebase Exploration
-After loading context, thoroughly explore the existing codebase:
-
-1. **Understand Current Architecture**
-   - Search for relevant files, modules, and components
-   - Identify existing patterns and conventions (from contexts)
-   - Map dependencies and relationships
-   - Review existing tests and documentation
-
-2. **Analyze Related Code**
-   - Use grep/glob to find similar implementations
-   - Review interfaces and data structures
-   - Understand error handling patterns
-   - Check configuration and environment setup
-
-3. **Identify Integration Points**
-   - External services and APIs
-   - Database schemas and migrations
-   - Event systems and message queues
-   - Authentication and authorization
-
-### Step 1.2 — Generate Comprehensive Questions
-Based on your codebase exploration and requirements, **answer or ask about EVERY item** in `.ctx/templates/PLAN_QUESTIONS.md`:
-
-**Required Sections - Must be fully addressed:**
-- Scope & Impact: Complete all sub-questions
-- Design Overview: Complete all sub-questions including external system details
-
-For each question in the template:
-- ✅ **Answer directly** if you found the information in the codebase
-- ❓ **Ask for clarification** if the information is missing or ambiguous
-- 🔍 **Indicate where you looked** in the codebase for context
+**Next Step**: Present technical findings in Phase 2's "✅ What I Understand", then ask clarification questions.
 
 ## Phase 2 — Interactive Clarification [CORE]
 
@@ -262,8 +237,8 @@ interface DataProcessor {
 ### Save Structure
 ```
 .ctx/stories/[NNNN-story-name-YYYY-MM-DD]/
-├── spec.md (or spec-*.md)
-└── plan.md (or plan-*.md)
+├── spec.md
+└── plan.md
 ```
 
 ## Phase 5 — Human Review & Approval [MANDATORY]

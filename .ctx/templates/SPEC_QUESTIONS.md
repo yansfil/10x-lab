@@ -1,6 +1,12 @@
 # Spec Development Question Checklist
 *Systematic guide for identifying clarifications needed*
 
+**Purpose**: This checklist focuses on **WHAT and WHY** - understanding user needs and business requirements.
+
+**Use during**: `/spec` workflow - before implementation planning begins.
+
+**Focus areas**: User value, business rules, acceptance criteria (NOT technical implementation).
+
 ## Core Questions by Category
 
 ### 🎯 Problem & Value

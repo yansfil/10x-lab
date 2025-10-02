@@ -2,6 +2,14 @@
 
 Use this guide before starting any implementation work.
 
+**Purpose**: This checklist focuses on **HOW** - technical design, architecture decisions, and implementation strategy.
+
+**Use during**: `/plan` workflow - AFTER spec is approved.
+
+**Prerequisites**: Spec must be completed first. This checklist builds on approved requirements.
+
+**Focus areas**: Technical approach, interfaces, test strategy, implementation phasing (NOT business requirements).
+
 ## Priority Levels
 - 🔴 **Critical**: Must be answered to proceed
 - 🟡 **Important**: Significantly affects solution
