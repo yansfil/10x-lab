@@ -1,11 +1,11 @@
 # Global Context Registry
 # ⚠️ AUTO-GENERATED - DO NOT EDIT
 # Run 'pnpm ctx:sync:global' to update
-# Generated: 2025-10-01T09:29:26.325Z
+# Generated: 2025-10-02T14:15:55.925Z
 
 meta:
   version: 1.0.0
-  last_synced: '2025-10-01T09:29:26.318Z'
+  last_synced: '2025-10-02T14:15:55.924Z'
   last_ai_update: null
 architecture:
   folder_checksum: 4b9f7d802648
@@ -30,34 +30,4 @@ rules:
     - path: rules/logging.md
       checksum: e3b0c44298fc
       last_modified: '2025-09-26T14:04:09.553Z'
-      ai_comment: null
-templates:
-  folder_checksum: 0a6e9b86bf75
-  file_count: 6
-  last_file_modified: '2025-10-01T04:41:57.541Z'
-  ai_comment: null
-  files:
-    - path: templates/SPEC_QUESTIONS.md
-      checksum: 9b5a0f15c5ae
-      last_modified: '2025-09-25T07:51:10.782Z'
-      ai_comment: null
-    - path: templates/SPEC.tpl.md
-      checksum: db95a81098d4
-      last_modified: '2025-10-01T04:41:57.541Z'
-      ai_comment: null
-    - path: templates/PLAN_QUESTIONS.md
-      checksum: cb18324b6d36
-      last_modified: '2025-09-26T07:32:10.804Z'
-      ai_comment: null
-    - path: templates/PLAN.tpl.md
-      checksum: 34673fd36f62
-      last_modified: '2025-10-01T04:41:57.537Z'
-      ai_comment: null
-    - path: templates/OVERVIEW.tpl.md
-      checksum: 4a2199e73386
-      last_modified: '2025-09-25T09:34:01.001Z'
-      ai_comment: null
-    - path: templates/CONTEXT.tpl.md
-      checksum: 8279298f4415
-      last_modified: '2025-09-29T08:52:30.297Z'
       ai_comment: null

@@ -16,12 +16,24 @@ async function main() {
       if (!result.success) {
         process.exit(1);
       }
-    } else if (target === 'local' || !target) {
-      // Local sync only (or default)
+    } else if (target === 'local') {
+      // Local sync only
       console.log('📦 Syncing local contexts...\n');
-      const rootPath = target === 'local' ? '.' : (target || '.');
-      const result = await syncLocalContexts(rootPath);
+      const result = await syncLocalContexts('.');
       if (!result.success) {
+        process.exit(1);
+      }
+    } else if (!target) {
+      // No argument: sync both local and global
+      console.log('📦 Syncing local contexts...\n');
+      const localResult = await syncLocalContexts('.');
+      if (!localResult.success) {
+        process.exit(1);
+      }
+
+      console.log('\n🌐 Syncing global contexts...\n');
+      const globalResult = await syncGlobalContexts();
+      if (!globalResult.success) {
         process.exit(1);
       }
     } else {

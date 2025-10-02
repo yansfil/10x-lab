@@ -23,7 +23,7 @@ const OUTPUT_FILE = '.global-context-registry.yml';
  * Find all markdown files in .ctx/ except overview.md and hidden files
  */
 async function findGlobalContextFiles(): Promise<Record<string, string[]>> {
-  const folders = ['architecture', 'rules', 'templates'];
+  const folders = ['architecture', 'rules'];
   const result: Record<string, string[]> = {};
 
   for (const folder of folders) {
@@ -217,8 +217,8 @@ export async function syncGlobalContexts(): Promise<SyncResult> {
       needsAnnotation.forEach(item => {
         const icon = item.type === 'folder' ? '📁' : '📄';
         const reason = item.reason === 'new' ? 'new file' :
-                       item.reason === 'content_changed' ? 'content changed' :
-                       'missing comment';
+          item.reason === 'content_changed' ? 'content changed' :
+            'missing comment';
         console.log(`   ${icon} ${item.path} (${reason})`);
       });
       console.log('\n💡 Run /sync-global-ctx in Claude Code to generate AI annotations');

@@ -17,7 +17,7 @@ This command:
 Execute the sync script to update mechanical metadata:
 
 ```bash
-pnpm ctx:sync:global
+pnpm ctx:sync
 ```
 
 Parse the output to identify:

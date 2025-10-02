@@ -1,12 +1,12 @@
 # Local Context Registry
 # ⚠️ AUTO-GENERATED - DO NOT EDIT
 # Run 'pnpm ctx:sync:local' to update
-# Generated: 2025-10-01T09:29:17.073Z
+# Generated: 2025-10-02T14:15:55.922Z
 
 meta:
   version: 1.0.0
   total_contexts: 1
-  last_sync: '2025-10-01T09:29:17.072Z'
+  last_sync: '2025-10-02T14:15:55.921Z'
   generation_command: pnpm ctx:sync:local
 contexts:
   /src/utils/url.ts:
